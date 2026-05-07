@@ -26,6 +26,11 @@ function cadastrar(event) {
         return;
     }
 
+      if (document.getElementById("tabelaInscritos")) {
+
+        carregarInscritos();
+
+    }
     // AGORA sim envia pro Formspree
     document.getElementById("cadastro-form").submit();
 

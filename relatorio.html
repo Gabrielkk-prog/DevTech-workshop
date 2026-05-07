@@ -37,7 +37,7 @@
 <script>
 const supabaseClient = supabase.createClient(
   "https://chcshzruympfsqxqzfay.supabase.co",
-  "sb_publishable_fvrhSvXEV0KrY1UqWI88kQ_Hcqs5RYT"
+  "sb_publishable_4xw9YjqGOxeyB5LxZBmGDw_wrYelGGb"
 );
 </script>
 
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             const { error } = await supabaseClient
-                .from("relatorio") // ⚠️ CONFIRME o nome da tabela
+                .from("Cadastro") // ⚠️ CONFIRME o nome da tabela
                 .insert([dados]);
 
             if (error) throw error;

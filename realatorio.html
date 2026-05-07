@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="asset/css/style.css">
+</head>
+<body>
+    <table>
+
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Telefone</th>
+                        <th>Área de Atuação</th>
+                        <th>Interesse</th>
+                        <th>Data de inscrição</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabelaInscritos"></tbody>
+
+            </table>
+
+            <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script>
+const supabaseClient = supabase.createClient(
+  "https://chcshzruympfsqxqzfay.supabase.co",
+  "sb_publishable_fvrhSvXEV0KrY1UqWI88kQ_Hcqs5RYT"
+);
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("formCadastro");
+    const botao = document.getElementById("btnEnviar");
+    const outrosCheck = document.getElementById("outrosCheck");
+    const outrosTexto = document.getElementById("outrosTexto");
+
+    // habilitar campo "outros"
+    outrosCheck.addEventListener("change", () => {
+        outrosTexto.disabled = !outrosCheck.checked;
+    });
+
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        botao.disabled = true;
+        botao.innerText = "Enviando...";
+
+        const formData = new FormData(form);
+
+        const dados = {
+            nome: formData.get("nome"),
+            email: formData.get("email"),
+            telefone: formData.get("telefone"),
+            nascimento: formData.get("nascimento"),
+            area: formData.get("area"),
+            interesse: formData.get("interesse"),
+            origem: formData.getAll("origem[]").join(", "),
+            outros: formData.get("outrosTexto"),
+            mensagem: formData.get("mensagem")
+        };
+
+        try {
+            const { error } = await supabaseClient
+                .from("Cadastro") // ⚠️ CONFIRME o nome da tabela
+                .insert([dados]);
+
+            if (error) throw error;
+
+            alert("Cadastro realizado com sucesso!");
+            form.reset();
+
+        } catch (err) {
+            console.error(err);
+            alert("Erro ao salvar no banco.");
+        }
+
+        botao.disabled = false;
+        botao.innerText = "Confirmar Inscrição";
+    });
+
+});
+</script>
+
+</body>
+</html>

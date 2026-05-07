@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             const { error } = await supabaseClient
-                .from("Cadastro") // ⚠️ CONFIRME o nome da tabela
+                .from("relatorio") // ⚠️ CONFIRME o nome da tabela
                 .insert([dados]);
 
             if (error) throw error;

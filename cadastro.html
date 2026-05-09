@@ -101,6 +101,8 @@ document.addEventListener("DOMContentLoaded", function () {
             atuacao: formData.get("atuacao"),
             interesse: formData.getAll("interesse[]").join(", "),
             fonte: formData.get("fonte"),
+            mensagem: formData.get("mensagem"),
+            data: new Date().toLocaleString("pt-BR"),
         };
 
         try {

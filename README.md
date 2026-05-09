@@ -44,3 +44,6 @@ Para mais informações sobre o evento:
 ## Desenvolvimento
 Obs:Foi idealizado para ser visualizado em despositivos mobile, logo ja existe um sistema de ajuste altomatico de layoult que se adapta a tela da maior parte dos smartphones atuais.
 O projeto é um site estático simples, sem necessidade de servidor ou build process. Para editar, basta modificar os arquivos HTML e CSS diretamente.
+
+## pagina especial para visualizar usuarios cadastrados no sistema:
+Abra o projeto e na URL, mude para ralatorio. 

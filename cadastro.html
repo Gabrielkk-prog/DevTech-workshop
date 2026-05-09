@@ -101,9 +101,10 @@ document.addEventListener("DOMContentLoaded", function () {
             atuacao: formData.get("atuacao"),
             interesse: formData.getAll("interesse[]").join(", "),
             fonte: formData.get("fonte"),
-            mensagem: formData.get("mensagem"),
-            data: new Date().toLocaleString("pt-BR"),
+            data: new Date().toISOString(),
         };
+        
+        console.log("Dados sendo enviados:", dados);
 
         try {
             const { error } = await supabaseClient
@@ -116,8 +117,8 @@ document.addEventListener("DOMContentLoaded", function () {
             form.reset();
 
         } catch (err) {
-            console.error(err);
-            alert("Erro ao salvar no banco.");
+            console.error("Erro completo:", err);
+            alert("Erro ao salvar no banco:\n\n" + (err.message || err));
         }
 
         botao.disabled = false;

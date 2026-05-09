@@ -58,35 +58,37 @@ const supabaseClient = supabase.createClient(
 // ========================================
 
 async function carregarInscritos() {
+    console.log("🔄 Buscando inscritos...");
 
     const { data, error } = await supabaseClient
-
         .from("Cadastro")
-
         .select("*");
 
-    console.log(data);
-
-    console.log(error);
+    console.log("📊 Dados recebidos:", data);
+    console.log("⚠️ Erro (se houver):", error);
 
     if (error) {
-
-        console.error(error);
-
-        alert(error.message);
-
+        console.error("❌ Erro ao buscar:", error);
+        alert("❌ Erro ao carregar relatório:\n" + error.message);
         return;
     }
 
-    const tabela =
-        document.getElementById("tabelaInscritos");
+    if (!data || data.length === 0) {
+        console.warn("⚠️ Nenhum cadastro encontrado");
+        alert("⚠️ Nenhum cadastro encontrado no banco de dados");
+        return;
+    }
 
-    if (!tabela) return;
+    const tabela = document.getElementById("tabelaInscritos");
+    if (!tabela) {
+        console.error("❌ Elemento tabelaInscritos não encontrado!");
+        return;
+    }
 
     tabela.innerHTML = "";
+    console.log(`✅ Carregando ${data.length} inscritos...`);
 
     data.forEach(inscrito => {
-
         tabela.innerHTML += `
             <tr>
                 <td>${inscrito.nome ?? ""}</td>
@@ -95,10 +97,8 @@ async function carregarInscritos() {
                 <td>${inscrito.atuacao ?? ""}</td>
                 <td>${inscrito.interesse ?? ""}</td>
                 <td>${inscrito.data ?? ""}</td>
-
             </tr>
         `;
-
     });
 
 <footer>

@@ -107,18 +107,27 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Dados sendo enviados:", dados);
 
         try {
-            const { error } = await supabaseClient
-                .from("Cadastro") // ⚠️ CONFIRME o nome da tabela
+            console.log("Enviando para Supabase:", dados);
+            
+            const { data: insertData, error } = await supabaseClient
+                .from("Cadastro")
                 .insert([dados]);
 
-            if (error) throw error;
+            console.log("Resposta do Supabase:", { insertData, error });
 
-            alert("Cadastro realizado com sucesso!");
+            if (error) {
+                console.error("Erro de inserção:", error);
+                alert("❌ Erro ao salvar:\n" + error.message);
+                return;
+            }
+
+            console.log("✅ Cadastro salvo com sucesso!");
+            alert("✅ Cadastro realizado com sucesso!");
             form.reset();
 
         } catch (err) {
-            console.error("Erro completo:", err);
-            alert("Erro ao salvar no banco:\n\n" + (err.message || err));
+            console.error("Erro na captura:", err);
+            alert("❌ Erro: " + (err.message || JSON.stringify(err)));
         }
 
         botao.disabled = false;

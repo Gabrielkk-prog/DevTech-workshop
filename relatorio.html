@@ -53,38 +53,8 @@ const supabaseClient = supabase.createClient(
     // ========================================
 
     if (document.getElementById("tabelaInscritos")) {
-        console.log("✅ Elemento tabelaInscritos encontrado, carregando dados...");
         carregarInscritos();
-    } else {
-        console.error("❌ Elemento tabelaInscritos NÃO encontrado!");
     }
-
-
-// ========================================
-// FUNÇÃO DE TESTE
-// ========================================
-
-async function testarConexao() {
-    console.log("🧪 Iniciando teste de conexão...");
-    
-    try {
-        // Teste básico de conexão
-        const { data, error } = await supabaseClient
-            .from("Cadastro")
-            .select("count", { count: 'exact', head: true });
-            
-        if (error) {
-            console.error("❌ Erro no teste:", error);
-            alert("❌ Teste falhou:\n" + error.message);
-        } else {
-            console.log("✅ Conexão OK! Count:", data);
-            alert("✅ Conexão com Supabase funcionando!\n\nSe não há dados, verifique:\n• Se há cadastros salvos\n• Permissões RLS no Supabase\n• Nome correto da tabela");
-        }
-    } catch (err) {
-        console.error("❌ Erro no teste:", err);
-        alert("❌ Erro no teste: " + (err.message || JSON.stringify(err)));
-    }
-}
 
 
 // ========================================
@@ -92,85 +62,34 @@ async function testarConexao() {
 // ========================================
 
 async function carregarInscritos() {
-    console.log("🔄 Buscando inscritos...");
-
     try {
-        // Primeiro, vamos testar a conexão e ver se a tabela existe
-        console.log("🔍 Testando conexão com Supabase...");
-        
-        // Tentar com "Cadastro" (maiúsculo)
-        let { data: testData, error: testError } = await supabaseClient
-            .from("Cadastro")
-            .select("count", { count: 'exact', head: true });
+        console.log("🔄 Buscando inscritos...");
 
-        console.log("📊 Teste com 'Cadastro' - Count:", testData, "Erro:", testError);
-
-        // Se não funcionar, tentar com "cadastro" (minúsculo)
-        if (testError) {
-            console.log("🔄 Tentando com 'cadastro' minúsculo...");
-            const result = await supabaseClient
-                .from("cadastro")
-                .select("count", { count: 'exact', head: true });
-            testData = result.data;
-            testError = result.error;
-            console.log("📊 Teste com 'cadastro' - Count:", testData, "Erro:", testError);
-        }
-
-        if (testError) {
-            console.error("❌ Problema com ambas as tabelas:", testError);
-            alert("❌ Erro na tabela:\n" + testError.message + "\n\nVerifique se a tabela existe e tem as permissões corretas.");
-            return;
-        }
-
-        // Agora buscar os dados
-        let { data, error } = await supabaseClient
+        const { data, error } = await supabaseClient
             .from("Cadastro")
             .select("*");
 
-        console.log("📊 Dados recebidos de 'Cadastro':", data);
-        console.log("⚠️ Erro (se houver):", error);
-
-        // Se não funcionar, tentar com "cadastro" minúsculo
-        if (error && error.message.includes("relation") || error.message.includes("table")) {
-            console.log("🔄 Tentando com 'cadastro' minúsculo...");
-            const result = await supabaseClient
-                .from("cadastro")
-                .select("*");
-            data = result.data;
-            error = result.error;
-            console.log("📊 Dados recebidos de 'cadastro':", data);
-            console.log("⚠️ Erro (se houver):", error);
-        }
+        console.log("📊 Dados:", data);
+        console.log("⚠️ Erro:", error);
 
         if (error) {
-            console.error("❌ Erro ao buscar:", error);
-            alert("❌ Erro ao carregar relatório:\n" + error.message);
+            console.error("❌ Erro:", error);
+            alert("Erro: " + error.message);
             return;
         }
 
-        if (!data) {
-            console.warn("⚠️ Data é null/undefined");
-            alert("⚠️ Dados não encontrados");
-            return;
-        }
-
-        if (data.length === 0) {
-            console.warn("⚠️ Nenhum cadastro encontrado");
-            alert("⚠️ Nenhum cadastro encontrado no banco de dados\n\nPossíveis causas:\n• Ainda não há cadastros\n• Problemas de permissões (RLS)\n• Dados salvos em tabela diferente\n• Verifique o painel do Supabase");
+        if (!data || data.length === 0) {
+            console.warn("⚠️ Nenhum dado encontrado");
+            alert("Nenhum cadastro encontrado");
             return;
         }
 
         const tabela = document.getElementById("tabelaInscritos");
-        if (!tabela) {
-            console.error("❌ Elemento tabelaInscritos não encontrado!");
-            return;
-        }
+        if (!tabela) return;
 
         tabela.innerHTML = "";
-        console.log(`✅ Carregando ${data.length} inscritos...`);
 
-        data.forEach((inscrito, index) => {
-            console.log(`👤 Inscrito ${index + 1}:`, inscrito);
+        data.forEach(inscrito => {
             tabela.innerHTML += `
                 <tr>
                     <td>${inscrito.nome ?? ""}</td>
@@ -183,21 +102,44 @@ async function carregarInscritos() {
             `;
         });
 
-        console.log("✅ Tabela populada com sucesso!");
+        console.log("✅ Relatório carregado!");
 
     } catch (err) {
         console.error("❌ Erro geral:", err);
-        alert("❌ Erro inesperado: " + (err.message || JSON.stringify(err)));
+        alert("Erro inesperado: " + (err.message || "Erro desconhecido"));
     }
 }
+
+
+// ========================================
+// FUNÇÃO DE TESTE
+// ========================================
+
+async function testarConexao() {
+    console.log("🧪 Testando conexão...");
+    
+    try {
+        const { data, error } = await supabaseClient
+            .from("Cadastro")
+            .select("count", { count: 'exact', head: true });
+            
+        if (error) {
+            console.error("❌ Erro:", error);
+            alert("❌ Teste falhou:\n" + error.message);
+        } else {
+            console.log("✅ Conexão OK!");
+            alert("✅ Conexão funcionando!");
+        }
+    } catch (err) {
+        console.error("❌ Erro:", err);
+        alert("❌ Erro no teste: " + (err.message || JSON.stringify(err)));
+    }
+}
+</script>
 
 <footer>
     DevTech 2026 • Evento tecnológico
 </footer>
-
-
-}
-</script>
 
 </body>
 </html>

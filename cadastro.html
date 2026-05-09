@@ -52,15 +52,17 @@ const supabaseClient = supabase.createClient(
     </select>
 
     <h3>Como ficou sabendo?</h3>
-    <!-- Radios precisam ter o mesmo name -->
-    <label><input type="radio" name="fonte" value="Instagram"> Instagram</label>
-    <label><input type="radio" name="fonte" value="Faculdade"> Faculdade</label>
-    <label><input type="radio" name="fonte" value="Amigos"> Amigos</label>
+    <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="fonte" value="Instagram"> Instagram</label>
+        <label class="radio-item"><input type="radio" name="fonte" value="Faculdade"> Faculdade</label>
+        <label class="radio-item"><input type="radio" name="fonte" value="Amigos"> Amigos</label>
+    </div>
 
     <h3>Interesses:</h3>
-    <!-- Para múltiplos valores use name="atividade[]" -->
-    <label><input type="checkbox" name="interesse[]" value="IA"> Palestra IA</label>
-    <label><input type="checkbox" name="interesse[]" value="Mobile"> Workshop Mobile</label>
+    <div class="checkbox-group">
+        <label class="checkbox-item"><input type="checkbox" name="interesse[]" value="IA"> Palestra IA</label>
+        <label class="checkbox-item"><input type="checkbox" name="interesse[]" value="Mobile"> Workshop Mobile</label>
+    </div>
 
     <label>Observações:</label>
     <textarea id="mensagem" name="mensagem"></textarea>

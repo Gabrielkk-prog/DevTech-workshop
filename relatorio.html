@@ -14,14 +14,11 @@
         <a href="sobre.html">Eventos</a>
     </nav>
 
-    <p>relatorio do sistema</p>
-    
-    <!-- Botão de teste -->
-    <button onclick="testarConexao()" style="margin: 10px; padding: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
-        🔍 Testar Conexão Supabase
-    </button>
-    
-    <table>
+    <div class="quadro">
+        <h1>Relatório do sistema</h1>
+        <p>Informações de todas as pessoas cadastradas no sistema.</p>
+
+        <table>
 
                 <thead>
                     <tr>
@@ -40,7 +37,7 @@
 
             <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
-<script>
+            <script>
 const supabaseClient = supabase.createClient(
   "https://qgnaenyrbxgjaesejhoc.supabase.co",
   "sb_publishable_4xw9YjqGOxeyB5LxZBmGDw_wrYelGGb"
@@ -103,39 +100,13 @@ async function carregarInscritos() {
         });
 
         console.log("✅ Relatório carregado!");
-
     } catch (err) {
         console.error("❌ Erro geral:", err);
         alert("Erro inesperado: " + (err.message || "Erro desconhecido"));
     }
 }
-
-
-// ========================================
-// FUNÇÃO DE TESTE
-// ========================================
-
-async function testarConexao() {
-    console.log("🧪 Testando conexão...");
-    
-    try {
-        const { data, error } = await supabaseClient
-            .from("Cadastro")
-            .select("count", { count: 'exact', head: true });
-            
-        if (error) {
-            console.error("❌ Erro:", error);
-            alert("❌ Teste falhou:\n" + error.message);
-        } else {
-            console.log("✅ Conexão OK!");
-            alert("✅ Conexão funcionando!");
-        }
-    } catch (err) {
-        console.error("❌ Erro:", err);
-        alert("❌ Erro no teste: " + (err.message || JSON.stringify(err)));
-    }
-}
 </script>
+</div>
 
 <footer>
     DevTech 2026 • Evento tecnológico

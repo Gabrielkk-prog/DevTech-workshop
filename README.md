@@ -46,4 +46,4 @@ Obs:Foi idealizado para ser visualizado em despositivos mobile, logo ja existe u
 O projeto é um site estático simples, sem necessidade de servidor ou build process. Para editar, basta modificar os arquivos HTML e CSS diretamente.
 
 ## pagina especial para visualizar usuarios cadastrados no sistema:
-Abra o projeto e na URL, mude para ralatorio. 
+Abra o projeto e na URL, mude a palavra antes de html para ralatorio . 

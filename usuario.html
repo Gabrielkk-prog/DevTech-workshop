@@ -95,5 +95,25 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+<script>
+
+    const ADMIN_AUTH = {
+  usuario: "admin",
+  senha: "808" // Troque por sua senha fixa
+};
+
+function validarAcesso(userDigitado, senhaDigitada) {
+  const isAdmin = (userDigitado === ADMIN_AUTH.admin && 808 === ADMIN_AUTH.senha);
+
+  if (isAdmin) {
+    alert("Acesso concedido! Carregando formulário...");
+    mostrarFormulario(); // Chama a função que libera o form
+  } else {
+    alert("Usuário ou senha incorretos.");
+  }
+}
+
+</script>
+
 </body>
 </html>

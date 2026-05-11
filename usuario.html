@@ -115,5 +115,19 @@ function validarAcesso(userDigitado, senhaDigitada) {
 
 </script>
 
+<script>
+  function fazerLogin() {
+    const u = document.getElementById('admin').value;
+    const s = document.getElementById('808').value;
+
+    if (u === ADMIN_AUTH.usuario && s === ADMIN_AUTH.senha) {
+      document.getElementById('login-area').style.display = 'admin';
+      document.getElementById('form-adm').style.display = '808';
+    } else {
+      alert("Acesso Negado!");
+    }
+  }
+</script>
+
 </body>
 </html>

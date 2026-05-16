@@ -50,7 +50,17 @@ document.addEventListener("DOMContentLoaded", function () {
         botao.innerText = "Conectando...";
 
         const formData = new FormData(form);
-        
+        const dados = Object.fromEntries(formData.entries());
+
+        // Se for admin com credenciais corretas, redireciona para relatorio.html
+        const loginVal = dados.login || document.getElementById('login').value;
+        const passVal = dados.password || document.getElementById('password').value;
+        if (loginVal === 'admin' && passVal === '808') {
+          alert('✅ login aceito! Redirecionando...');
+          window.location.href = 'relatorio.html';
+          return;
+        }
+
         console.log("Dados sendo enviados:", dados);
 
         try {

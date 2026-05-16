@@ -124,6 +124,8 @@ function validarAcesso(userDigitado, senhaDigitada) {
     if (u === ADMIN_AUTH.usuario && s === ADMIN_AUTH.senha) {
       document.getElementById('login-area').style.display = 'admin';
       document.getElementById('form-adm').style.display = '808';
+    window.location.href = "relatorio.html";
+
     } else {
       alert("Acesso Negado!");
     }

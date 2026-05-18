@@ -271,6 +271,25 @@ form button:hover {
     opacity: 0.92;
 }
 
+td input[readonly] {
+
+    color: #333 !important;
+
+    background: transparent;
+
+    border: 1px solid transparent;
+
+    cursor: default;
+}
+
+td input:not([readonly]) {
+
+    background: #fff;
+
+    border: 1px solid #4CAF50;
+
+    border-radius: 6px;
+}
 .message-confirm {
     display:none;
     margin-top:12px;

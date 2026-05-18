@@ -107,7 +107,26 @@ async function carregarInscritos() {
         alert("Erro inesperado: " + (err.message || "Erro desconhecido"));
     }
 }
+async function carregarInscritos() {
+    
+}
 
+    const { data, error } =
+        await supabaseClient
+            .from("Cadastro")
+            .select("*")
+            .order("id", {
+                ascending: false
+            });
+
+    if (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
+        return;
+    }
 const tabela =
         document.getElementById(
             "tabelaInscritos"

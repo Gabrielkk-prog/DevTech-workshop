@@ -301,6 +301,43 @@ td input:not([readonly]) {
     font-weight: 600;
 }
 
+td input {
+
+    width: 100%;
+    padding: 6px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+
+    color: #333 !important;
+
+    background: transparent;
+
+    border: 1px solid transparent;
+
+    outline: none;
+
+    box-sizing: border-box;
+}
+
+td input[readonly] {
+
+    color: #333 !important;
+
+    background: transparent;
+
+    border: 1px solid transparent;
+
+    cursor: default;
+}
+
+td input:not([readonly]) {
+
+    background: #fff;
+
+    border: 1px solid #4CAF50;
+
+    border-radius: 6px;
+}
 footer {
     margin-top: 30px;
     background: rgba(16, 24, 34, 0.96);

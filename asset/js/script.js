@@ -14,3 +14,4 @@ function atualizarContador() {
 setInterval(atualizarContador, 1000);
 atualizarContador();
 
+

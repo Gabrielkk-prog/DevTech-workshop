@@ -1,380 +1,156 @@
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
 const supabaseClient = supabase.createClient(
   "https://qgnaenyrbxgjaesejhoc.supabase.co",
   "sb_publishable_4xw9YjqGOxeyB5LxZBmGDw_wrYelGGb"
 );
 
-
-
-    // ========================================
-    // RELATÓRIO
-    // ========================================
-
-    if (document.getElementById("tabelaInscritos")) {
-        carregarInscritos();
-    }
-
-
-// ========================================
-// CARREGAR INSCRITOS
-// ========================================
-
 async function carregarInscritos() {
-    try {
-        console.log("🔄 Buscando inscritos...");
+  const tabela = document.getElementById("tabelaInscritos");
+  if (!tabela) return;
 
-        const { data, error } = await supabaseClient
-            .from("Cadastro")
-            .select("*")
-            .order("id", {
-                ascending: false
-             });
+  tabela.innerHTML = "";
 
-        console.log("📊 Dados:", data);
-        console.log("⚠️ Erro:", error);
-
-        if (error) {
-            console.error("❌ Erro:", error);
-            alert("Erro: " + error.message);
-            return;
-        }
-
-        if (!data || data.length === 0) {
-            console.warn("⚠️ Nenhum dado encontrado");
-            alert("Nenhum cadastro encontrado");
-            return;
-        }
-
-        const tabela = document.getElementById("tabelaInscritos");
-        if (!tabela) return;
-
-        tabela.innerHTML = "";
-
-        data.forEach(inscrito => {
-            tabela.innerHTML += `
-                <tr>
-                    <td>${inscrito.nome ?? ""}</td>
-                    <td>${inscrito.email ?? ""}</td>
-                    <td>${inscrito.telefone ?? ""}</td>
-                    <td>${inscrito.atuacao ?? ""}</td>
-                    <td>${inscrito.interesse ?? ""}</td>
-                    <td>${inscrito.data ?? ""}</td>
-                </tr>
-            `;
-        });
-
-        console.log("✅ Relatório carregado!");
-    } catch (err) {
-        console.error("❌ Erro geral:", err);
-        alert("Erro inesperado: " + (err.message || "Erro desconhecido"));
-    }
-
-
-    const { data, error } =
-        await supabaseClient
-            .from("Cadastro")
-            .select("*")
-            .order("id", {
-                ascending: false
-            });
+  try {
+    const { data, error } = await supabaseClient
+      .from("Cadastro")
+      .select("*")
+      .order("id", { ascending: false });
 
     if (error) {
-
-        console.error(error);
-
-        alert(error.message);
-
-        return;
+      console.error("Erro ao buscar inscritos:", error);
+      alert("Erro ao carregar dados: " + error.message);
+      return;
     }
-}
 
-const tabela =
-        document.getElementById(
-            "tabelaInscritos"
-        );
+    if (!data || data.length === 0) {
+      tabela.innerHTML = `
+        <tr>
+          <td colspan="7">Nenhum cadastro encontrado.</td>
+        </tr>
+      `;
+      atualizarResumo(0, 0);
+      return;
+    }
 
-    if (!tabela) return;
-
-    tabela.innerHTML = "";
-
-    data.forEach(inscrito => {
-
-        tabela.innerHTML += `
-
-            <tr>
-
-                <td>
-                    <input
-                        type="text"
-                        id="nome-${inscrito.id}"
-                        value="${String(inscrito.nome || '').replace(/"/g, '&quot;')}"
-                        readonly
-                    >
-                </td>
-
-                <td>
-                    <input
-                        type="email"
-                        id="email-${inscrito.id}"
-                        value="${inscrito.email ?? ""}"
-                        readonly
-                    >
-                </td>
-
-                <td>
-                    <input
-                        type="text"
-                        id="telefone-${inscrito.id}"
-                        value="${inscrito.telefone ?? ""}"
-                        readonly
-                    >
-                </td>
-
-                <td>
-                    <input
-                        type="text"
-                        id="atuacao-${inscrito.id}"
-                        value="${inscrito.atuacao ?? ""}"
-                        readonly
-                    >
-                </td>
-
-                <td>
-                    <input
-                        type="text"
-                        id="interesse-${inscrito.id}"
-                        value="${inscrito.interesse ?? ""}"
-                        readonly
-                    >
-                </td>
-
-                <td>
-                    ${inscrito.data ?? ""}
-                </td>
-
-                <td>
-
-                    <button
-                        id="btnEditar-${inscrito.id}"
-                        onclick="habilitarEdicao(${inscrito.id})"
-                    >
-                        Editar
-                    </button>
-
-                    <button
-                        onclick="excluirRegistro(${inscrito.id})"
-                    >
-                        Excluir
-                    </button>
-
-                </td>
-
-            </tr>
-        `;
+    data.forEach((inscrito) => {
+      tabela.innerHTML += `
+        <tr>
+          <td><input type="text" id="nome-${inscrito.id}" value="${sanitize(inscrito.nome)}" readonly></td>
+          <td><input type="email" id="email-${inscrito.id}" value="${sanitize(inscrito.email)}" readonly></td>
+          <td><input type="text" id="telefone-${inscrito.id}" value="${sanitize(inscrito.telefone)}" readonly></td>
+          <td><input type="text" id="atuacao-${inscrito.id}" value="${sanitize(inscrito.atuacao)}" readonly></td>
+          <td><input type="text" id="interesse-${inscrito.id}" value="${sanitize(inscrito.interesse)}" readonly></td>
+          <td>${sanitize(inscrito.data)}</td>
+          <td>
+            <button type="button" id="btnEditar-${inscrito.id}" onclick="habilitarEdicao(${inscrito.id})">Editar</button>
+            <button type="button" onclick="excluirRegistro(${inscrito.id})">Excluir</button>
+          </td>
+        </tr>
+      `;
     });
 
-    // ========================================
-    // MÉTRICAS
-    // ========================================
+    const totalAreas = [...new Set(data.map((item) => item.atuacao))].filter(Boolean);
+    atualizarResumo(data.length, totalAreas.length);
+  } catch (err) {
+    console.error("Erro inesperado ao carregar inscritos:", err);
+    alert("Erro inesperado ao carregar dados.");
+  }
+}
 
-    const totalInscritos =
-        document.getElementById(
-            "totalInscritos"
-        );
+function sanitize(value) {
+  if (value == null) return "";
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 
-    if (totalInscritos) {
-
-        totalInscritos.innerText =
-            data.length;
-    }
-
-    const totalAreas =
-        document.getElementById(
-            "totalAreas"
-        );
-
-    if (totalAreas) {
-
-        const areas = [
-
-            ...new Set(
-                data.map(
-                    i => i.atuacao
-                )
-            )
-        ];
-
-        totalAreas.innerText =
-            areas.length;
-    }
-
-
-// ========================================
-// HABILITAR EDIÇÃO
-// ========================================
+function atualizarResumo(total, areas) {
+  const totalInscritos = document.getElementById("totalInscritos");
+  const totalAreas = document.getElementById("totalAreas");
+  if (totalInscritos) totalInscritos.innerText = total;
+  if (totalAreas) totalAreas.innerText = areas;
+}
 
 function habilitarEdicao(id) {
+  const campos = ["nome", "email", "telefone", "atuacao", "interesse"];
+  campos.forEach((campo) => {
+    const elemento = document.getElementById(`${campo}-${id}`);
+    if (elemento) elemento.readOnly = false;
+  });
 
-    document.getElementById(
-        `nome-${id}`
-    ).readOnly = false;
-
-    document.getElementById(
-        `email-${id}`
-    ).readOnly = false;
-
-    document.getElementById(
-        `telefone-${id}`
-    ).readOnly = false;
-
-    document.getElementById(
-        `atuacao-${id}`
-    ).readOnly = false;
-
-    document.getElementById(
-        `interesse-${id}`
-    ).readOnly = false;
-
-    const botao =
-        document.getElementById(
-            `btnEditar-${id}`
-        );
-
-    botao.innerText = "Salvar";
-
-    botao.onclick = function () {
-
-        salvarEdicao(id);
-    };
+  const botao = document.getElementById(`btnEditar-${id}`);
+  if (!botao) return;
+  botao.innerText = "Salvar";
+  botao.onclick = () => salvarEdicao(id);
 }
-
-// ========================================
-// SALVAR EDIÇÃO
-// ========================================
 
 async function salvarEdicao(id) {
+  const nome = document.getElementById(`nome-${id}`)?.value?.trim() ?? "";
+  const email = document.getElementById(`email-${id}`)?.value?.trim() ?? "";
+  const telefone = document.getElementById(`telefone-${id}`)?.value?.trim() ?? "";
+  const atuacao = document.getElementById(`atuacao-${id}`)?.value?.trim() ?? "";
+  const interesse = document.getElementById(`interesse-${id}`)?.value?.trim() ?? "";
 
-    const nome =
-        document.getElementById(
-            `nome-${id}`
-        ).value;
-
-    const email =
-        document.getElementById(
-            `email-${id}`
-        ).value;
-
-    const telefone =
-        document.getElementById(
-            `telefone-${id}`
-        ).value;
-
-    const atuacao =
-        document.getElementById(
-            `atuacao-${id}`
-        ).value;
-
-    const interesse =
-        document.getElementById(
-            `interesse-${id}`
-        ).value;
-
-    const { error } =
-        await supabaseClient
-            .from("Cadastro")
-            .update({
-
-                nome,
-                email,
-                telefone,
-                atuacao,
-                interesse
-
-            })
-            .eq("id", id);
+  try {
+    const { error } = await supabaseClient
+      .from("Cadastro")
+      .update({ nome, email, telefone, atuacao, interesse })
+      .eq("id", id);
 
     if (error) {
-
-        console.error(error);
-
-        alert(
-            "Erro ao atualizar registro."
-        );
-
-        return;
+      console.error("Erro ao salvar:", error);
+      alert("Erro ao salvar registro: " + error.message);
+      return;
     }
 
-    document.getElementById(
-        `nome-${id}`
-    ).readOnly = true;
+    const campos = ["nome", "email", "telefone", "atuacao", "interesse"];
+    campos.forEach((campo) => {
+      const elemento = document.getElementById(`${campo}-${id}`);
+      if (elemento) elemento.readOnly = true;
+    });
 
-    document.getElementById(
-        `email-${id}`
-    ).readOnly = true;
+    const botao = document.getElementById(`btnEditar-${id}`);
+    if (botao) {
+      botao.innerText = "Editar";
+      botao.onclick = () => habilitarEdicao(id);
+    }
 
-    document.getElementById(
-        `telefone-${id}`
-    ).readOnly = true;
-
-    document.getElementById(
-        `atuacao-${id}`
-    ).readOnly = true;
-
-    document.getElementById(
-        `interesse-${id}`
-    ).readOnly = true;
-
-    const botao =
-        document.getElementById(
-            `btnEditar-${id}`
-        );
-
-    botao.innerText = "Editar";
-
-    botao.onclick = function () {
-
-        habilitarEdicao(id);
-    };
-
-    alert(
-        "Registro atualizado com sucesso!"
-    );
+    alert("Registro atualizado com sucesso!");
+    carregarInscritos();
+  } catch (err) {
+    console.error("Erro inesperado ao salvar:", err);
+    alert("Erro inesperado ao salvar registro.");
+  }
 }
 
-// ========================================
-// EXCLUIR REGISTRO
-// ========================================
-
 async function excluirRegistro(id) {
+  const confirmar = confirm("Deseja realmente excluir este registro?");
+  if (!confirmar) return;
 
-    const confirmar =
-        confirm(
-            "Deseja realmente excluir?"
-        );
-
-    if (!confirmar) return;
-
-    const { error } =
-        await supabaseClient
-            .from("Cadastro")
-            .delete()
-            .eq("id", id);
+  try {
+    const { error } = await supabaseClient
+      .from("Cadastro")
+      .delete()
+      .eq("id", id);
 
     if (error) {
-
-        console.error(error);
-
-        alert(
-            "Erro ao excluir registro."
-        );
-
-        return;
+      console.error("Erro ao excluir:", error);
+      alert("Erro ao excluir registro: " + error.message);
+      return;
     }
 
-    alert(
-        "Registro excluído!"
-    );
-
+    alert("Registro excluído com sucesso!");
     carregarInscritos();
+  } catch (err) {
+    console.error("Erro inesperado ao excluir:", err);
+    alert("Erro inesperado ao excluir registro.");
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", carregarInscritos);
+} else {
+  carregarInscritos();
 }

@@ -19,26 +19,29 @@
         <h1>Relatório do sistema</h1>
         <p>Informações de todas as pessoas cadastradas no sistema.</p>
 
+        <div class="relatorio-resumo">
+            <span>Total inscritos: <strong id="totalInscritos">0</strong></span>
+            <span>Áreas diferentes: <strong id="totalAreas">0</strong></span>
+        </div>
+
         <table>
-
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>E-mail</th>
-                        <th>Telefone</th>
-                        <th>Área de Atuação</th>
-                        <th>Interesse</th>
-                        <th>Data de inscrição</th>
-                        <th>açoes</th>
-                    </tr>
-                </thead>
-
-                <tbody id="tabelaInscritos"></tbody>
-
-            </table>
-
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Telefone</th>
+                    <th>Área de Atuação</th>
+                    <th>Interesse</th>
+                    <th>Data de inscrição</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaInscritos"></tbody>
+        </table>
     </div>
-<scrpt src="asset/js/script.js/relatorio.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="relatorio.js"></script>
 <footer>
 
 

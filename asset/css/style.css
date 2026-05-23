@@ -58,6 +58,9 @@ nav a:hover {
     margin: 0 auto;
     overflow: hidden;
     min-height: 420px;
+    /* padrão de background para área de evento (fallback quando não há imagem) */
+    background-color: var(--bg-card);
+    background-image: linear-gradient(120deg, rgba(165,108,255,0.06), rgba(82,61,126,0.06));
 }
 .hero img {
     position: absolute;
@@ -66,12 +69,13 @@ nav a:hover {
     height: 100%;
     object-fit: cover;
     filter: brightness(0.65);
+    /* caso a imagem não carregue, o background padrão será exibido */
 }
 .hero::after {
     content: "";
     position: absolute;
     left: 0; top: 0; right: 0; bottom: 0;
-    background: linear-gradient(120deg, rgba(165,108,255,0.55), rgba(82, 61, 126, 0.7));
+    background: linear-gradient(120deg, rgba(165,108,255,0.35), rgba(82, 61, 126, 0.45));
     pointer-events: none;
     z-index: 1;
 }

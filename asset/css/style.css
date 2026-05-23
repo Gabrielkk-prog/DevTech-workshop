@@ -279,6 +279,33 @@ table input {
     outline: none;
 }
 
+/* Responsividade da tabela e destaque de edição */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Garantir largura mínima para leitura em desktop, mas permitir scroll no mobile */
+.quadro table {
+    min-width: 760px;
+}
+
+/* Nome em branco por padrão */
+.nome-field {
+    color: var(--white);
+    font-weight: 600;
+    background: transparent;
+}
+
+/* Quando a linha estiver em edição, destacar inputs com fundo branco e texto preto */
+tr.editing input {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid rgba(0,0,0,0.12) !important;
+    border-radius: 6px;
+    padding: 6px 8px;
+}
+
 button {
 
     padding: 8px 12px;
@@ -327,4 +354,5 @@ footer a:hover { color: #dad8ff; }
     .hero-text p { font-size: clamp(0.85rem, 3vw, 0.95rem); margin: 0; }
     .cards { grid-template-columns: 1fr; }
     .timer-box { flex-direction: column; }
+    .quadro table { min-width: 620px; }
 }

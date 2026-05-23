@@ -33,8 +33,8 @@ async function carregarInscritos() {
 
     data.forEach((inscrito) => {
       tabela.innerHTML += `
-        <tr>
-          <td><input type="text" id="nome-${inscrito.id}" value="${sanitize(inscrito.nome)}" readonly></td>
+        <tr id="row-${inscrito.id}">
+          <td><input class="nome-field" type="text" id="nome-${inscrito.id}" value="${sanitize(inscrito.nome)}" readonly></td>
           <td><input type="email" id="email-${inscrito.id}" value="${sanitize(inscrito.email)}" readonly></td>
           <td><input type="text" id="telefone-${inscrito.id}" value="${sanitize(inscrito.telefone)}" readonly></td>
           <td><input type="text" id="atuacao-${inscrito.id}" value="${sanitize(inscrito.atuacao)}" readonly></td>
@@ -84,6 +84,9 @@ function habilitarEdicao(id) {
   if (!botao) return;
   botao.innerText = "Salvar";
   botao.onclick = () => salvarEdicao(id);
+  // destacar linha em edição
+  const row = document.getElementById(`row-${id}`);
+  if (row) row.classList.add('editing');
 }
 
 async function salvarEdicao(id) {
@@ -116,6 +119,10 @@ async function salvarEdicao(id) {
       botao.innerText = "Editar";
       botao.onclick = () => habilitarEdicao(id);
     }
+
+    // remover destaque de edição
+    const row = document.getElementById(`row-${id}`);
+    if (row) row.classList.remove('editing');
 
     alert("Registro atualizado com sucesso!");
     carregarInscritos();

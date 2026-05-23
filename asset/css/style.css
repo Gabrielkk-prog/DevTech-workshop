@@ -21,22 +21,34 @@ body {
 }
 
 nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
     padding: 14px;
-    text-align: center;
     background: rgba(20, 30, 40, 0.92);
     border-bottom: 1px solid #2f3b4a;
     position: sticky;
     top: 0;
     z-index: 10;
 }
+nav .nav-links {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
 nav a {
     color: var(--white);
     text-decoration: none;
-    margin: 0 14px;
+    margin: 0;
+    padding: 8px 12px;
     font-weight: 600;
+    border-radius: 8px;
+    transition: background .18s ease, color .18s ease;
 }
 nav a:hover {
     color: var(--accent-light);
+    background: rgba(255,255,255,0.03);
 }
 
 .hero {
@@ -355,4 +367,23 @@ footer a:hover { color: #dad8ff; }
     .cards { grid-template-columns: 1fr; }
     .timer-box { flex-direction: column; }
     .quadro table { min-width: 620px; }
+    /* Nav: stack links on small screens for better touch targets */
+    nav {
+        flex-direction: column;
+        gap: 8px;
+        align-items: stretch;
+        padding: 10px;
+    }
+    nav .nav-links {
+        flex-direction: column;
+        width: 100%;
+    }
+    nav .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 12px 14px;
+        text-align: center;
+        background: rgba(255,255,255,0.02);
+        border-radius: 8px;
+    }
 }

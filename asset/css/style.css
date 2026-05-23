@@ -271,72 +271,25 @@ form button:hover {
     opacity: 0.92;
 }
 
-td input[readonly] {
+table input {
 
-    color: #333 !important;
-
+    border: none;
     background: transparent;
-
-    border: 1px solid transparent;
-
-    cursor: default;
-}
-
-td input:not([readonly]) {
-
-    background: #fff;
-
-    border: 1px solid #4CAF50;
-
-    border-radius: 6px;
-}
-.message-confirm {
-    display:none;
-    margin-top:12px;
-    border:1px solid #66ffba;
-    background:#1d2f40;
-    color:#b3ffe0;
-    padding:10px;
-    border-radius: 7px;
-    font-weight: 600;
-}
-
-td input {
-
-    width: 100%;
-    padding: 6px;
-    font-size: 14px;
-    font-family: 'Poppins', sans-serif;
-
-    color: #333 !important;
-
-    background: transparent;
-
-    border: 1px solid transparent;
-
+        width: 100%;
     outline: none;
-
-    box-sizing: border-box;
 }
 
-td input[readonly] {
+button {
 
-    color: #333 !important;
-
-    background: transparent;
-
-    border: 1px solid transparent;
-
-    cursor: default;
-}
-
-td input:not([readonly]) {
-
-    background: #fff;
-
-    border: 1px solid #4CAF50;
-
+    padding: 8px 12px;
+    border: none;
     border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+
+    opacity: 0.8;
 }
 footer {
     margin-top: 30px;

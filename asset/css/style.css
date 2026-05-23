@@ -367,23 +367,21 @@ footer a:hover { color: #dad8ff; }
     .cards { grid-template-columns: 1fr; }
     .timer-box { flex-direction: column; }
     .quadro table { min-width: 620px; }
-    /* Nav: stack links on small screens for better touch targets */
+    /* Keep nav links inline on small screens; allow wrapping for narrow viewports */
     nav {
-        flex-direction: column;
+        flex-direction: row;
         gap: 8px;
-        align-items: stretch;
         padding: 10px;
+        justify-content: center;
     }
     nav .nav-links {
-        flex-direction: column;
-        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
     }
     nav .nav-links a {
-        display: block;
-        width: 100%;
-        padding: 12px 14px;
-        text-align: center;
-        background: rgba(255,255,255,0.02);
-        border-radius: 8px;
+        display: inline-block;
+        padding: 8px 10px;
     }
 }

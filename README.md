@@ -1,4 +1,5 @@
 # DevTech Event Website
+(frontend+backend)
 
 Este é um site estático para promover o evento DevTech, focado em Inteligência Artificial e Desenvolvimento Mobile.
 

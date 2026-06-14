@@ -1,6 +1,6 @@
-# DevTech Event Website
+# DevTech Event Website \\supabese endpoint pause the app for inativity in 7 days, so the subscriptions not will works.
 (frontend+backend)
-
+      
 Este é um site estático para promover o evento DevTech, focado em Inteligência Artificial e Desenvolvimento Mobile.
 
 ## Descrição do Projeto
@@ -34,11 +34,11 @@ Dev-web/
 - HTML5
 - CSS3
 - javaScript
-- supabase (como backend)
+- supabase (com endpoint)
 ## Contato
 
 Para mais informações sobre o evento:
-- Telefone: (11) 1234-5678
+- Telefone: (11) 1234-5678 fic
 - Data: 23/07/26
 - Local: Teatro Colégio Londrinense - Av. Juscelino Kubitscheck, 1652 - Quebec, Londrina - PR
 

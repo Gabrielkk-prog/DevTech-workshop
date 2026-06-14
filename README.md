@@ -1,10 +1,10 @@
-# DevTech Event Website \\supabese endpoint pause the app for inativity in 7 days, so the subscriptions not will works.
+# DevTech Event Website 
 (frontend+backend)
       
 Este é um site estático para promover o evento DevTech, focado em Inteligência Artificial e Desenvolvimento Mobile.
 
 ## Descrição do Projeto
-
+\\supabese endpoint pause the app for inativity in 7 days, so the subscriptions not will works.
 O site contém três páginas principais:
 - **index.html**: Página inicial com informações sobre o evento, local, data e contatos.
 - **cadastro.html**: Página de cadastro com formulário para inscrição no evento.

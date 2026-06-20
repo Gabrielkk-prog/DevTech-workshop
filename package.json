@@ -1,0 +1,9 @@
+{
+  "name": "dev-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npx http-server . -p 8080",
+    "live": "npx live-server --port=5500"
+  }
+}

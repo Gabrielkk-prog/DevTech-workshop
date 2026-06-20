@@ -1,5 +1,6 @@
 # DevTech Event Website 
 (frontend+backend)
+view: https://gabrielkk-prog.github.io/DevTech-workshop/index.html
       
 Este é um site estático para promover o evento DevTech, focado em Inteligência Artificial e Desenvolvimento Mobile.
 

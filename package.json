@@ -2,8 +2,13 @@
   "name": "dev-web",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://gabrielkk-prog.github.io/DevTech-workshop",
   "scripts": {
     "start": "npx http-server . -p 8080",
-    "live": "npx live-server --port=5500"
+    "live": "npx live-server --port=5500 --open=./index.html"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
   }
 }

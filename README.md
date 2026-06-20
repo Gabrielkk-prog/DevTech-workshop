@@ -26,8 +26,27 @@ Dev-web/
 
 ## Como Usar
 
-1. Abra qualquer um dos arquivos HTML em um navegador web.
-2. Navegue entre as páginas usando o menu de navegação.
+1. Instale as dependências pela primeira vez:
+
+```bash
+npm install
+```
+
+2. Para rodar localmente com um servidor HTTP:
+
+```bash
+npm run start
+```
+
+3. Para rodar com Live Server na porta 5500:
+
+```bash
+npm run live
+```
+
+4. Abra `http://127.0.0.1:5500` ou `http://localhost:8080` no navegador.
+
+5. Navegue entre as páginas usando o menu de navegação.
 
 ## Tecnologias Utilizadas
 

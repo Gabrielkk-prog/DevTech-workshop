@@ -11,6 +11,17 @@
         "reveal": "always",
         "panel": "dedicated"
       }
+    },
+    {
+      "label": "Start Live Server",
+      "type": "shell",
+      "command": "npm run live",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
     }
   ]
 }

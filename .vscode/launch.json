@@ -8,6 +8,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
+            "preLaunchTask": "Start Dev Server",
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}"
         },
@@ -15,6 +16,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Launch with Live Server",
+            "preLaunchTask": "Start Live Server",
             "url": "http://127.0.0.1:5500",
             "webRoot": "${workspaceFolder}"
         }
